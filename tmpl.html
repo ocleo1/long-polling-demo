@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <div id="showText">
+    </div>
+    <script>
+        var showTextEle = document.getElementById('showText');
+        function polling() {
+            fetch('http://localhost:8000/status/get?key=long-polling', {
+                method: 'GET'
+            }).then((response) => {
+                showTextEle.innerHTML = showTextEle.innerHTML + response.status + ': ' + response.statusText + "<br>";
+                polling();
+            }).catch((err) => {
+                console.error(err)
+            });
+        }
+        polling();
+    </script>
+</body>
+
+</html>
